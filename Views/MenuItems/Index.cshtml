@@ -1,6 +1,6 @@
 ﻿@model List<MenuItem>
 
-<a asp-action="Welcome" asp-controller="Login" class="btn btn-primary">Return</a>
+<a asp-action="Index" asp-controller="Admin" class="btn btn-primary">Return</a>
 
 @foreach (var menuItem in Model)
 {
@@ -12,11 +12,11 @@
             <p class="card-text">Price: @menuItem.Price</p>
             <p class="card-text">Availability: @menuItem.IsAvailable</p>
             <p class="card-text">Discription: @menuItem.Description</p>
-            <a asp-controller="MenuItems" asp-action="Edit" asp-route-id=@menuItem.MenuItemID class="btn btn-warning">Edit</a>
+            <a asp-controller="MenuItems" asp-action="Edit" asp-route-menuItemID=@menuItem.MenuItemID class="btn btn-warning">Edit</a>
 
 
             <form method="post" asp-action="Delete" style="display:inline;">
-                <input type="hidden" name="customerID" value="@menuItem.MenuItemID" />
+                <input type="hidden" name="menuItemID" value="@menuItem.MenuItemID" />
                 <button type="submit" class="btn btn-danger">Delete</button>
             </form>
 

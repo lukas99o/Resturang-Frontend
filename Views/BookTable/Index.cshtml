@@ -10,7 +10,7 @@
             <div class="card-body">
                 <h5 class="card-title">Table Number: @table.TableID</h5>
                 <p class="card-text">Table Seats: @table.TableSeats</p>
-                <a asp-action="Book" asp-route-id="@table.TableID" asp-controller="BookTable" class="btn btn-primary">Book now</a>
+                <a asp-action="Book" asp-route-tableID="@table.TableID" asp-controller="BookTable" class="btn btn-primary">Book now</a>
             </div>
         </div>
     }

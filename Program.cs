@@ -1,3 +1,7 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 namespace ResturangFrontEnd
 {
     public class Program
@@ -9,6 +13,38 @@ namespace ResturangFrontEnd
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpClient();
+            builder.Services.AddSession();
+
+            builder.Services.AddAuthentication(o =>
+            {
+                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                o.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtKey"]!))
+                };
+
+                o.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var token = context.HttpContext.Request.Cookies["jwt"];
+
+                        if (!string.IsNullOrEmpty(token))
+                        {
+                            context.Token = token;
+                        }
+
+                        return Task.CompletedTask;
+                    }
+                };
+            });
 
             var app = builder.Build();
 
@@ -20,43 +56,17 @@ namespace ResturangFrontEnd
                 app.UseHsts();
             }
 
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             // Configure routes
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
-            // Routes for CRUD operations
-            app.MapControllerRoute(
-                name: "bookings",
-                pattern: "api/Bookings/{action=Index}/{id?}",
-                defaults: new { controller = "Bookings" });
-
-            app.MapControllerRoute(
-                name: "customers",
-                pattern: "api/Customers/{action=Index}/{id?}",
-                defaults: new { controller = "Customers" });
-
-            app.MapControllerRoute(
-                name: "tables",
-                pattern: "api/Tables/{action=Index}/{id?}",
-                defaults: new { controller = "Tables" });
-
-            app.MapControllerRoute(
-                name: "menus",
-                pattern: "api/Menus/{action=Index}/{id?}",
-                defaults: new { controller = "Menus" });
-
-            app.MapControllerRoute(
-                name: "menuitems",
-                pattern: "MenuItem/{action=Index}/{id?}",
-                defaults: new { controller = "MenuItems" });
 
             app.Run();
         }

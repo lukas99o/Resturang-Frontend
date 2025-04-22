@@ -19,7 +19,6 @@ namespace ResturangFrontEnd.Controllers
         public async Task<IActionResult> Index()
         {
             ViewData["Title"] = "Table Booking";
-
             var response = await _httpClient.GetAsync($"{baseUrl}api/Tables");
             var json = await response.Content.ReadAsStringAsync();
             var TableList = JsonConvert.DeserializeObject<List<Table>>(json);
@@ -27,16 +26,21 @@ namespace ResturangFrontEnd.Controllers
             return View(TableList);
         }
 
-        public async Task<IActionResult> Book(int id)
+        public async Task<IActionResult> Book(int tableID)
         {
             ViewData["Title"] = "Book Table";
 
-            var booking = new Booking
+            var response = await _httpClient.GetAsync($"{baseUrl}api/tables/GetSpecificTable/{tableID}");
+            var json = await response.Content.ReadAsStringAsync();
+            var table = JsonConvert.DeserializeObject<Table>(json);
+
+            var model = new Booking
             {
-                TableID = id
+                TableID = tableID,
+                MaxSeats = table.TableSeats
             };
 
-            return View(booking);
+            return View(model);
         }
 
         [HttpPost]

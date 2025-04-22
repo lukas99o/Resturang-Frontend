@@ -16,7 +16,10 @@ namespace ResturangFrontEnd.Models
         public int Price { get; set; }
 
         public bool IsAvailable { get; set; }
-        public string ImgUrl { get; set; }
+
+        [Required(ErrorMessage = "This field can't be empty")]
         public string Description { get; set; }
+
+        public string? ImgUrl { get; set; }
     }
 }

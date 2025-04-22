@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using ResturangFrontEnd.Models;
 using System.Text;
 
 namespace ResturangFrontEnd.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class MenuItemsController : Controller
     {
         private readonly HttpClient _httpClient;
@@ -53,11 +55,11 @@ namespace ResturangFrontEnd.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int menuItemID)
         {
             ViewData["Title"] = "Edit Menu Item";
 
-            var response = await _httpClient.GetAsync($"{baseUrl}api/MenuItems/GetSpecificMenuItem/{id}");
+            var response = await _httpClient.GetAsync($"{baseUrl}api/MenuItems/GetSpecificMenuItem/{menuItemID}");
 
             var json = await response.Content.ReadAsStringAsync();
 
@@ -94,17 +96,7 @@ namespace ResturangFrontEnd.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> Showcase()
-        {
-            ViewData["Title"] = "Showcase";
-
-            var response = await _httpClient.GetAsync($"{baseUrl}api/MenuItems");
-            var json = await response.Content.ReadAsStringAsync();
-
-            var menuItemList = JsonConvert.DeserializeObject<List<MenuItem>>(json);
-
-            return View(menuItemList);
-        }
+        
     }
 
 }

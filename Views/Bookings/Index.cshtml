@@ -1,6 +1,6 @@
 ﻿@model List<Booking>
 
-<a asp-action="Welcome" asp-controller="Login" class="btn btn-primary">Return</a>
+<a asp-action="Index" asp-controller="Admin" class="btn btn-primary">Return</a>
 
 @foreach(var booking in Model)
 {
@@ -11,7 +11,6 @@
             <p class="card-text">CustomerID: @booking.CustomerID</p>
             <p class="card-text">TableID: @booking.TableID</p>
             <p class="card-text">Amount of people: @booking.AmountOfPeople</p>
-            <p class="card-text">Date: @booking.Date</p>
             <p class="card-text">Time: @booking.Time</p>
             <p class="card-text">TimeEnd: @booking.TimeEnd</p>
             <a asp-controller="Bookings" asp-action="Edit" asp-route-id=@booking.BookingID class="btn btn-warning">Edit</a>

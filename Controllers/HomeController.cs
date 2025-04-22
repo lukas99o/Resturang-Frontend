@@ -41,5 +41,17 @@ namespace ResturangFrontEnd.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public async Task<IActionResult> Showcase()
+        {
+            ViewData["Title"] = "Showcase";
+
+            var response = await _httpClient.GetAsync($"{baseUrl}api/MenuItems");
+            var json = await response.Content.ReadAsStringAsync();
+
+            var menuItemList = JsonConvert.DeserializeObject<List<MenuItem>>(json);
+
+            return View(menuItemList);
+        }
     }
 }

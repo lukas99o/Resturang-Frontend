@@ -4,7 +4,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="jumpotron text-center bg-primary text-white py-5 mb-4">
+<div class="jumbotron text-center bg-primary text-white py-5 mb-4">
     <h1 class="display-4">Restaurant Kifo</h1>
     <p class="lead">Kifo - A World of Flavors</p>
     <p>Indulge in a diverse range of delicious dishes from around the globe. Whether you're craving something hearty, light, or exotic, our menu has something for everyone!</p>
@@ -16,16 +16,15 @@
     <div class="row">
         @for (int i = 0; i < 10 && i < Model.Count; i++)
         {
-            <div class="col-6 col-md-4 col-lg-3 text-center mb-4">
-                <div class="card shadow-sm">
-                    <img src="@Model[i].ImgUrl" style="width: 200px; height: auto;" alt="@Model[i].Description" loading="lazy" />
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">@Model[i].Name</h5>
-                    <p class="card-text">@Model[i].Description</p>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 d-flex align-items-stretch">
+                <div class="card shadow-sm w-100">
+                    <img src="@Model[i].ImgUrl" class="card-img-top" alt="@Model[i].Description" style="object-fit: cover; height: 180px;" loading="lazy" />
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">@Model[i].Name</h5>
+                        <p class="card-text">@Model[i].Description</p>
+                    </div>
                 </div>
             </div>
         }
     </div>
 </div>
-
