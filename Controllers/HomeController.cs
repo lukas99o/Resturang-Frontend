@@ -42,9 +42,9 @@ namespace ResturangFrontEnd.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public async Task<IActionResult> Showcase()
+        public async Task<IActionResult> Menu()
         {
-            ViewData["Title"] = "Showcase";
+            ViewData["Title"] = "Menu";
 
             var response = await _httpClient.GetAsync($"{baseUrl}api/MenuItems");
             var json = await response.Content.ReadAsStringAsync();
