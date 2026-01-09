@@ -1,0 +1,45 @@
+﻿@model List<MenuItem>
+
+<div class="bg-dark text-white py-3 shadow rounded">
+    <h1 class="text-center">Our food and drinks</h1>
+</div>
+
+<div class="container">
+    <h2 class="my-4 text-dark">Dishes</h2>
+    <div class="row">
+        @foreach (var food in Model)
+        {
+            @if (food.MenuID == 1)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card shadow h-100" style="border: 2px solid black;">
+                        <div class="card-body bg-white d-flex flex-column">
+                            <h5 class="card-title text-dark text-start">@food.Name</h5>
+                            <p class="card-text text-dark">Price: @food.Price</p>
+                            <p class="card-text text-secondary flex-grow-1">Description: @food.Description</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    <h2 class="my-4 text-dark">Drinks</h2>
+    <div class="row">
+        @foreach (var drink in Model)
+        {
+            @if (drink.MenuID == 2)
+            {
+                <div class="col-md-3 mb-4">
+                    <div class="card shadow h-100" style="border: 2px solid black;">
+                        <div class="card-body bg-white d-flex flex-column">
+                            <h5 class="card-title text-dark text-start">@drink.Name</h5>
+                            <p class="card-text text-dark">Price: @drink.Price</p>
+                            <p class="card-text text-secondary flex-grow-1">Description: @drink.Description</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
