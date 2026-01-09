@@ -21,6 +21,15 @@ namespace ResturangFrontEnd.Models
         [Required(ErrorMessage = "This field can't be empty")]
         public DateTime TimeEnd { get; set; }
 
+        [Required(ErrorMessage = "This field can't be empty")]
+        public string? Name { get; set; }
+
+        [Required(ErrorMessage = "This field can't be empty")]
+        public string? Phone { get; set; }
+
+        [Required(ErrorMessage = "This field can't be empty")]
+        public string? Email { get; set; }
+
         public int MaxSeats { get; set; }
     }
 }
