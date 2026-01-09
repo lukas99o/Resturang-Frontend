@@ -6,6 +6,11 @@
 <html lang="en">
 @{
     var title = ViewData["Title"] ?? "Kifo Restaurant";
+    var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
+    var currentAction = ViewContext.RouteData.Values["action"]?.ToString();
+    string NavLinkClass(string controller, string action = null) =>
+        currentController == controller && (action == null || currentAction == action)
+            ? "nav-link active fw-semibold text-warning" : "nav-link";
 }
 <head>
     <meta charset="utf-8" />
@@ -28,13 +33,13 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="@(NavLinkClass("Home", "Index"))" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Menu">Our Menu</a>
+                            <a class="@(NavLinkClass("Home", "Menu"))" asp-area="" asp-controller="Home" asp-action="Menu">Our Menu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="BookTable" asp-action="Index">Book Table</a>
+                            <a class="@(NavLinkClass("BookTable", "Index"))" asp-area="" asp-controller="BookTable" asp-action="Index">Book Table</a>
                         </li>
                         @{
                             var token = Context.Request.Cookies["jwt"];
@@ -57,10 +62,10 @@
                         @if (isAdmin) 
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Admin" asp-action="Index">CRUD</a>
+                                <a class="@(NavLinkClass("Admin", "Index"))" asp-controller="Admin" asp-action="Index">CRUD</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Account" asp-action="LogOut">Log Out</a>
+                                <a class="@(NavLinkClass("Account", "LogOut"))" asp-controller="Account" asp-action="LogOut">Log Out</a>
                             </li>
                         } @* else {
                             <li class="nav-item">
@@ -78,9 +83,15 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025A - ResturangFrontEnd - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <footer class="border-top bg-dark text-light text-center footer">
+        <div class="container" style="line-height: normal">
+            <p class="mt-3"><span class="fw-bold">Restaurant Kifo</span> - A restaurant and booking system</p>
+            <p class="d-flex gap-3 justify-content-center flex-wrap">
+                <a class="link-light text-decoration-none" href="#">Github</a>
+                <a class="link-light text-decoration-none" href="#">Contact</a>
+                <a class="link-light text-decoration-none" href="#">Portfolio</a>
+            </p>
+            <p>&copy; 2026A - ResturangFrontEnd - <span><a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-light">Privacy</a></span></p>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
